@@ -241,12 +241,13 @@ class CustomCaveApplication(caveapp.CaveApplication):
 				pointlist += [point]
 				x += 0.05
 			viz.endLayer()
-		male = viz.add('male/male.3ds')
+		male = viz.add('vcc_male.cfg')
 		male.setCenter(1,0,0)
 		male.setEuler(180,0,0)
-		male.setPosition(-0.45,-1.3,-0.15)
-		male.setScale(0.03,0.03,0.03)
 		male.setParent(wound)
+		male.setPosition(-2,-1.3,-.15)
+		#male.setScale(0.03,0.03,0.03)
+		
 		#wound.setEuler(0,-90,0)
 	else:
 		print 'No points are close enough together.'
