@@ -78,13 +78,32 @@ class CustomCaveApplication(caveapp.CaveApplication):
 		
 		caveapp.CaveApplication.__init__(self,desktop_mode) #call constructor of super class, you have to do this explicitly in Python		
 		
-		#self.wand = vizshape.addAxes()#load axis model to represent the wand
-		self.Room = viz.addChild('Scene\ScannedRoom.3DS')
-		self.Room.collidePlane()
-		self.Room.setScale([1.25,1.25,1.25])
-		self.Room.setEuler([90,0,0])
-		self.Room.setPosition([-1.5,0,1.55])
+		self.wand = vizshape.addAxes()#load axis model to represent the wand\
+		self.cylinder = vizshape.addCylinder(15,0.002,axis=vizshape.AXIS_X)
+		self.cylinder.setEuler([0,0,0])
+		#self.cylinder.setCenter([0,0,-1])
+		self.cylinder.setPosition(7.5,0.08,0)
 		
+		self.stuff = vizshape.addSphere(0.0001)
+		self.cylinder.setParent(self.stuff)
+		
+#		temp = vizshape.addSphere(0.05)
+#		temp.setParent(self.cylinder)
+#		temp.setPosition(self.cylinder.getCenter())
+		
+		self.wand = self.stuff
+#		self.wand.setPosition(.5,-1,0)
+#		self.cm = self.wand.getMatrix()
+#		self.Room = viz.addChild('D:\Cave software\NFI Cave\Scene\ScannedRoom.3DS')
+#		self.Room.collidePlane()
+#		self.Room.setScale([1.25,1.25,1.25])
+#		self.Room.setEuler([90,0,0])
+#		self.Room.setPosition([-1.5,0,1.55])
+		self.Room = viz.addChild('scene/ScannedRoom.3DS')
+		self.Room.collidePlane()
+		self.Room.setScale([0.002,0.002,0.002])
+		self.Room.setEuler([90,0,0])
+		self.Room.setPosition([-1.5,0.015,1.58])
 		"""
 		mylight = viz.addLight() 
 		mylight.enable() 
@@ -241,11 +260,11 @@ class CustomCaveApplication(caveapp.CaveApplication):
 				pointlist += [point]
 				x += 0.05
 			viz.endLayer()
-		male = viz.add('male/male.3ds')
+		male = viz.add('vcc_male.cfg')
 		male.setCenter(1,0,0)
 		male.setEuler(180,0,0)
 		male.setPosition(-0.45,-1.3,-0.15)
-		male.setScale(0.03,0.03,0.03)
+		#male.setScale(0.03,0.03,0.03)
 		male.setParent(wound)
 		#wound.setEuler(0,-90,0)
 	else:
@@ -290,7 +309,11 @@ class CustomCaveApplication(caveapp.CaveApplication):
 		
 		#set the wand (i.e. one of the trackers NOT the wiimote)		
 		#the wand is viewed as a coordinate system
-		#self.wand.setMatrix(self.cavelib.localMatrixToWorld(self.cavelib.getWandMatrix()))
+#		offset = viz.Matrix()
+#		offset.setPosition(1,0,0)
+		offset = self.cavelib.localMatrixToWorld(self.cavelib.getWandMatrix())
+		self.wand.setMatrix(self.cavelib.localMatrixToWorld(self.cavelib.getWandMatrix()))
+		#self.wand.setEuler([0,90,0])
 		
 		#set the thing
 		#the thing is the plant model
